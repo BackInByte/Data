@@ -1,0 +1,19 @@
+L'image disque d'une machine d'un suspect vous est envoy�e. Le suspect est soup�onn� de trafic d'arme. Voyez si vous pouvez trouver des preuves � ce sujet.
+
+Utilisez Autopsy pour cr�er un case et ouvrir le fichier Evidence.E01.
+
+Ouvrez le fichier /img_Evidence.E01/vol_vol7/Users/secre/AppData/Roaming/Zoom/data/36hf7hjdtmsdyqpagtqcww@xmpp.zoom.us/36hf7hjdtmsdyqpagtqcww@xmpp.zoom.us.db
+
+Puis ouvrez le fichier /img_Evidence.E01/vol_vol7/Users/secre/AppData/Roaming/Zoom/data/36hf7hjdtmsdyqpagtqcww@xmpp.zoom.us/36hf7hjdtmsdyqpagtqcww@xmpp.zoom.us.idx.db
+
+Puis ouvrez la table zoom_mm_file du fichier /img_Evidence.E01/vol_vol7/Users/secre/AppData/Roaming/Zoom/data/36hf7hjdtmsdyqpagtqcww@xmpp.zoom.us/36hf7hjdtmsdyqpagtqcww@xmpp.zoom.us.asyn.db
+
+Connectez vous � une r�union Zoom avec Fiddler Web Debugger activ� en arri�re plan. Envoyez-vous un fichier � travers Zoom et observer le format du lien :
+https://file.zoom.us/zoomfile/download?v=5.1.28546.0628&objkey=AxZ2NTlZUUtVZ1FoLXEtX2xJSk5NSGFBFm5IQXNpQkZGVHppTGlxY3BKZlJYeWc=.uUyXPk26FCLU_zUA_kv1sWFWEafe9iAkSfyMrUI2kR4=
+Forger l'URL avec la cha�ne trouv� : AxYzNmhmN2hqZFRNU2RZUVBBZ1RxQ3d3Fk5vX29UakpxUU11c0s3ekF6UDFuenc=.YL2yfbP5WLN-7wfQAJj2Hih5dyThMsDC6wwE71yFDJg=
+
+https://file.zoom.us/zoomfile/download?v=5.1.28546.0628&objkey=AxYzNmhmN2hqZFRNU2RZUVBBZ1RxQ3d3Fk5vX29UakpxUU11c0s3ekF6UDFuenc=.YL2yfbP5WLN-7wfQAJj2Hih5dyThMsDC6wwE71yFDJg=
+Connectez-vous � cette URL en utilisant les cookies de votre session Zoom en cours de debug avec Fiddler. 
+Trop tard, le fichier n'est plus accessible sur Zoom. L'investigation ne pourra pas s'appuyer sur cette preuve :-(
+
+Un write-up de ce challenge sur Internet : https://isopach.dev/Defenit-CTF-2020-Writeup/

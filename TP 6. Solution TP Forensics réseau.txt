@@ -1,0 +1,26 @@
+L'�quipe de la s�curit� a d�tect� des activit�s r�seaux suspectes sur un serveur Internet en production.
+Ils vous ont envoy� les �l�ments pour analyse.
+Pouvez-vous prouver que des donn�es ont �t� vol�es  ?
+
+D�chiffrez l'archive TP Forensics r�seau_v1.0.zip avec la passphrase suivante :
+Allez-vous trouver le flag aujourd'hui ?
+
+Les fichiers logs dans le r�pertoire bro sont issus du NIDS Bro :
+https://www.linuxlinks.com/bro/
+
+Le flag se trouve au milieu des donn�es exfiltr�es, plus pr�cis�ment au milieu des num�ros de carte bancaire. 
+Le format du flag est
+...{...}
+
+Pour extraire la cl� priv� du .pem, la commande est :
+openssl pkey -in bundle.pem -out keyout.pem
+Pour d�chiffrer les flux, aller dans :
+edit > preference > protocol > ssl (ou tls)
+Et entrer le fichier secrets.log dans le champ "(Pre)-Master-Secret log filename"
+
+Filtre Wireshark int�ressant � utiliser :
+http contains "POST"
+
+L'int�gralit� de la solution se trouve ici (le mot de passe est HTB{Th15_15_4_F3nD3r_Rh0d35_M0m3NT!!}) : https://github.com/Hackplayers/hackthebox-writeups/blob/master/challenges/forensics/x4nt0n-Marshal_In_The_Middle.pdf 
+
+Le d�tail sur le d�chiffrement de flux SSL dans Wireshark est ici : https://lekensteyn.nl/files/wireshark-ssl-decryption.pdf

@@ -1,0 +1,74 @@
+astuces pour récup
+ram peut corrompre preuve un peu mais pas faire = se priver
+ssd pb unif et trim, pas intégrité
+
+ram si système éteint
+si fichiers supprimés (sous win juste retirés du système de fichier): tenter de retrouver des fragments
+
+cours 4 :
+solutions pour retrouver un mdp sous windows (dump mémoire lsass.exe, brutforce, demande, fichier)
+
+récupérer clé de déchiffrement d'un disque : dump mémoire, demander user, puce CMOS)
+
+journaux, bash_history, comprendre ce qu'il s'est passé
+horodatage requête, nombre anormal de requête, bah_history
+analyse des logs du pareèfeu pour retrouver @IP et 1ère co attaquant, liste de fichiers modifiés et par qui
+
+
+
+cours 5 : réseau et mobile
+
+Moyens disponibles pour extraire des preuves inforensiques d'Android:
+puce smartphone : en dernier recours
+JTAG
+logique en copiant fichier accessibles
+physique en acquérant image du backup
+
+infos à rechercher via analyse statique du smartphone
+
+
+cours 6 - étude de cas, megacorp
+---outils
+clé bootable, Kali Linux
+car disque soudé
+disque pas monté une fois que distrib démarée
+cpie du disque avec dd
+on travaille sur copie de la copie
+
+puis copie montée en lecture seule pour ne pas altérer
+
+on observe : répo perso, corbeille
+
+plusieurs façons de restaurer un fichier effacé
+-explorer MFT
+-recherche avec méthode de file carving (réassembler fichier à partir de fragments)
+-image : thunmbs.db, thumbcache
+--artéfacts
+
+trouver traces d'utilisation de fichiers:
+internet exploirer : index.dat, webcache pour edge
+regarder dans base de registre le MRU : most recently used (dans ruche NTUSER.DAT)
+grep sur nom de fichier
+
+(cours précédent Volatility), Autopsy
+
+Pour explorer registre Windows : RegRipper
+ESEDDatabaseView : explorer bdd webcache microsoft edge, possible de réparer si corrompue par arrêt brutal
+
+fichiers .ink créés quand app ouvre un fichier, peuvent contenir path du fichier ouvert
+
+méthodes pour obtenir des infos intéressantes sur une clé : dmesg, commande lsusb...
+
+ne pas monter clé usb, copie bit à bit avec dd, file carving pour retrouver fichiers effacés
+
+
+logs windows : check si authenth ratées : si bcp = suspect
+
+ruche SOFTWARE de la base de registre trace point d'accès Windows auxquels s'est connecté le système
+
+wigle.net pour trouver la géolocalisation physique d'un point d'accès Wi-Fi
+
+donc attention même si preuves qui semblent accablantes, se demander si pas usurpé, matériel volé
+
+--Cours 7
+Gain accès hacker type

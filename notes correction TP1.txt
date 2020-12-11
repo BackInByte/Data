@@ -1,0 +1,14 @@
+1 - timezone : aller voir base de registres
+"remonter la ruche"
+Utiliser Registry explorer ou regedit, file->load hive
+Aller dans Windows>System32>config>SYSTEM -> ouvrir
+
+Aller ensuite dans "CMI">ControlSet001 ou 002, Chercher champ TimeZone
+
+Ici monter en RW pour tout lire (dans un rapport on le préciserait et on travaillerait sur une copie de la preuve)
+
+---
+Identifier les partitions :
+sur linux : fdisk -l pc.dd
+
+EXAM = QCM : questions soit ouverte soit avec réponses à cocher, sur un peu tout ce qu'on a vu, pas sous forme pratique, accès à Internet, "juste à chercher sur Internet si questions plus pointues"

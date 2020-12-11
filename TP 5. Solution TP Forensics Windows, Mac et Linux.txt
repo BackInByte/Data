@@ -1,0 +1,22 @@
+0 - Extrayez l'archive Forensics_compatible_Windows_Mac_Linux.zip avec le mot de passe suivant :
+Est-ce que vous allez trouver le flag en moins d'une heure ?
+
+1 - Analysez l'image m�moire image.raw
+Quel est l'id du processus Desktop Windows Manager ?
+volatility_2.6_lin64_standalone imageinfo -f image.raw 
+volatility_2.6_lin64_standalone -f image.raw --profile=Win7SP1x64 pstree > pstree.txt
+cat pstree.txt | grep dwm
+2512
+
+Quel est le processus malveillant ?
+Le processus qui n'appara�t pas couramment dans la liste des processus est spmm.exe
+
+Quel est le hash SHA256 de ce processus malveillant ?
+volatility_2.6_lin64_standalone -f image.raw --profile=Win7SP1x64 procdump -p 2940 --dump-dir tenflodir
+sha256sum executable.2940.exe
+f03df7a5c6ea31ecfac016c84ade902587024a473ceac0c8070cef3eb900a2d5
+
+2 - Trouvez le flag au sein du fichier Forensics_compatible_Windows_Mac_Linux.pcap. 
+C'est une chaine de caract�re commen�ant par flag et finissant par la lettre Q
+
+https://hatsoffsecurity.com/2017/06/02/ringzer0team-forensics-challenge-35-poor-internet-connection/

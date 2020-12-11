@@ -1,0 +1,43 @@
+0 - Hash MD5 attendu : a1ff5e89356257a5a35b364ce60df3cd
+
+Pour ouvrir l'image disque, utiliser USB Forensic Tracker v1.1.3, puis cliquer sur "Mount Forensic Image" puis "Mount Raw Image"
+
+I - What is the timezone setting? 
+
+RegistryExplorer... en ouvrant la ruche :
+I (ou la lettre du lecteur qui correspond au dossier Windows de la machine du suspect) 
+I:\Windows\System32\config\SYSTEM
+Puis aller dans :
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation
+
+II - Identify the partition information of PC image.
+
+fdisk -l image_disk.dd
+
+III - What web browsers were used?
+
+Il y a 3 endroits int�ressants :
+1- Dans Program Files
+2- dans I:\Users\informant\AppData\Roaming\Microsoft\Internet Explorer\Quick Launch
+3- dans les logs Windows
+
+IV - What application was used for e-mail communication?
+
+Il y a 2 cl�s de registre int�ressantes :
+HKLM\SOFTWARE\Clients\Mail
+HKLM\SOFTWARE\Classes\mailto\shell\open\command
+
+V - Where is the e-mail file located? What was the e-mail account used by the suspect? 
+
+%userprofile%\AppData\Local\Microsoft\Outlook
+
+VI - List external storage devices attached to PC 
+
+Il y a 4 mani�res de le faire :
+1- Windows\inf\setupapi.dev.log
+2- 6 cl�s de registres
+3-dans les logs Windows
+4-en utilisant directement USB Forensic Tracker :
+	S�lectionner le lecteur � investiguer (dans mon cas I:\)
+	Cliquer sur l'icone vert en haut � gauche
+	Se promener dans les onglets pour acc�der aux diff�rentes informations (notamment l'onglet Registry-USBSTOR)

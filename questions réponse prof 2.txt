@@ -1,0 +1,18 @@
+Systèmes de fichiers Windows ?
+Pourquoi corbeille : change d'index
+MFT c'est quoi
+Shadow copy ça sert à quoi ?
+Processus dans lequel on peut récupérer un mdp en clair => lsass.exe
+mode transparent, clé usb, authentication user : pour déchiffrement disque dur
+Active directory c'est quoi ? => hash dedans, BDD
+
+Système de fichier mac :HFS
+
+Système de fichier Linux : ext4; zfs
+
+Comment s'en sortir avec disque chiffré?
+Si allumé => RAM
+
+Champs dans les logs de journaux web ?
+(on a vu 6)
+URI, méthode de la requête, horodatage, ip source, code de réponse HTTP

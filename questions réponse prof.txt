@@ -1,0 +1,10 @@
+étape de la cyberkeychain qui dure quelques secondes : exploitation
+types d'IOC
+portables pourquoi mettre de côté ?
+réseau cellulaire : passe en clair
+2 grosses problématiques smartphone : batterie et communicatino permanente => faradet 
+Carte SIM : données d'authentificatino auprès de l'opérateur, parfois num etsms
+outil analyse statique sur app android ?
+analyse statique = on analyse le code sans l'exécutyer
+dynamique on exécute pour comprendre comment le code marche
+2 techniques complémentaires

@@ -1,0 +1,318 @@
+1 - Introduction aux techniques forensic
+
+1)Intro de l'intro
+3 aspects :
+Le moyen
+L'opportunité
+La motivation
+
+2)Les types de preuves :
+Capture réseau (pas trop en justice, plus en entreprise, sondes, cassage flux SSL, capture auto lorsque comportement suspect)
+Document imprimé (watermark, horodatage, numéro de série imprimante)
+Email (très utilisé, plein d'infos, intention, dupliqué, dur à compromettre, utilisé en justice, pb si cloud)
+Historique internet (trouvable à plusieurs endroits différents : RAM, capture, smartphone, DD)
+Photo numérique (image + metadata)
+SMS, Whatsapp, Signal (SMS en clair, stocké smarphtone + relais si mandat, durée de vie courte, check save google drive si chiffrement whatsapp)
+Vidéo numérique (très utile pour comprendre, dur à modifier mais attention quand même si man in the middle et pas chiffré, check intégrité, deepfake)
+
+Card skimming : données de carte bancaire chiffrées pour empêcher attaquant de récup)
+
+3)Compétences requises : com, confidentialité, curiosité, langue, légal, techniques
+
+4)Jobs Inforensique : nécessite plusieurs années d'expériences, bien de commencer par SOC (L1, L2, L3), peu de poste plein temps sauf ANSSI
+Domaines qui embauchent : forces de l'ordre, cabinet d'audit, grosses boîtes, experts judiciaires en informatique
+
+5)Historique : France a suivi Amérique, Interpol, Futur de l'inforensique?
+
+
+--------------------------------------
+2 - Problématiques techniques et légales
+
+1)Hardware
+-Important de connaître les différents types de matériel et la diversité pour savoir où regarder (interco physique, etc)
+-Processus de collecte aussi important que la preuve elle-même pour être recevable en justice
+
+Types de connectiques DD : SCSI, IDE, SATA
+Types de connectiques périph amovibles : USB, FireWire, MMC
+
+Médias pouvant contenir de l'info : tout sauf boîtier d'alim, RAM (sauf si encore allumé, ou accès à dump mémoire), processeur et valise
+
+2) Investigation en ligne
+
+Générateurs d'identité et de mails, réseau de faux compte, darknet
+
+Moyens pour dissimuler véritable identités : SecureDrop, Tor, VPN... : forum ok si confiance, ne pas aller sur Internet : ne fonctionne pas forcément car possible de retrouver des infos grâce à d'autres personnes (ex Fb)
+
+Recherches sur les antécédents d'une personne : réseaux sociaux, blogs, github, archive.org...
+
+Types de cybercrime : tout sauf cybermeurtre(?), fraude carte bibliothécaire, vol d'avatar
+
+OSINT : open source intelligence : renseignement à partir de sources d'info publiques
+Ex : profiter de certificate transparency (norme pour rendre public des certificats) pour identifier des sous-domaines non visibles de base, profite red team mais aussi blue team pour identifier C&C malware et auteur
+
+Plusieurs outils utilies pour de l'OSINT (ex shodan qui répertorie les IoT)
+
+Cas concret :
+savoir bien communiquer avec les gens pour qu'ils avouent des infos utiles à l'enquêtes (coupable, info perso...)
+possible de retrouver anciennes version de malware/ransomware pour analyser, retrouver clé de chiffrement etc
+
+OSINT souvent utilisé par les journalistes
+
+3) Photo et vidéo
+
+Types de fichiers photos : certains en matrice de points et d'autres en images vectorielles
+exemples fichiers types matrices de point : bmp, png, jpg, gif
+
+Altération d'image pour dissimuler un détail : mieux vaut utiliser des techniques brevetées et reconnues que du brouillage "maison"
+
+Magic number : signature caractéristique d'un format de fichier ou protocole (constante numérique ou ensemble de caractère)
+
+Possible d'entrer sur le réseau par le biais d'objet connecté moins sécurisés/présentant des vuln connues, utilisés comme rebond
+
+-------------------------------------------------------------
+3 - Collecte et préservation des traces (statique, dynamique)
+
+1)Les preuves numériques
+Principe : si malfaiteur + intensité de l'action criminelle = forcément des traces
+Contact entre 2 choses, échange => principe de la science forensique et donc inforensique qui y appartient
+
+Sur scène du crime en inforensique, preuves numériques qui peuvent être
+-physique (appareils)
+-virtuel (données sur cluster, SAN, VM...)
+
+Acquisition et proction des preuves qui peut être difficile car + de couches d'abstractions, mais aussi + d'outils
+
+Preuves numériques :
+Plus dur à détruire (redondance, traces, nécessite droits d'accès importants et maîtrise exceptionnelle du système d'info)
+Peuvent contenir beaucoup d'info
+Faciles à dupliquer
+Faciles à modifier
+Capture d'écran : pas une preuve au sens judiciaire mais peut servir de point de départ et suffisantes pour la plupart des clients privés)
+Manque de procédures et standars établis
+Elle doivent être gérées avec des précautions spécifiques	
+
+5 règles pour les preuves numériques
+admissible : peut être utilisé en justice ou ailleurs
+authentiques : lié à l'incident d'une manière pertinente
+complète : montre toutes les perspectives de l'incident (tout ce qui prouve et contredit)
+fiable et juste : acquisition et procédure ne doivent pas faire l'objet d'un doute sur l'authenticité et véracité de la preuve
+convaincant : clair, facile à comprendre et à croire pour le jury (relation claire entre preuve et version simplifiée)
+
+Recevabilité de la preuve
+Authentique : signature des logs par clé privée du SIEM
+Intègre : garantie par hash
+Vérifiable : preuve envoyée automatique par système lors d'intrusion (sans que attaquant puisse modifier avant envoi)
+Exploitable : dépend de "l'intelligence" des règles de collecte
+Durable : durée de rétention des logs qui dépendent des contraintes (légales, chartes)
+
+2) Collecte et préservation des traces
+
+Quelle est la preuve ? (info hardware : photo, description, num série, id, nom d'hôte + info num : nom de fichier, hash)
+Comment a-t-elle été obtenue? (outils utilisés, type d'acquisition (en direct/hors-ligne), format de stockage)
+Quand l'acquisition a eu lieu? (doit être mis à l'écart, avec fuseau horaire)
+Qui l'a manipulé? (chaîne de possesion, toutes les personnes qui ont touché à la preuve)
+Où était-ce stocké? (localisation physique : modèle, num série, IP du stockage/NAS)
+
+Saisie effectuée :
+-souvent par/avec forces de l'ordre
+-toujours par technicien formé
+-respect de la loi, peut nécessiter un mandat
+-peu importe domaine, respect de la vie privée et des droits humains
+-preuvent doivent être saisies rapidement pour rester admissibles en justice
+
+Identifier les données : compressées ou pas, en direct/hôte éteint?
+Identifier les paramètres de l'acquisition : une partie/disque complet?
+Collecte des infos de BIOS : horodotage en particulier
+Prendre beaucoup de photos : environnement, objets (dommages, rayures), câbles
+Ajouter des étiquettes distinctives pour éviter les doublons
+
+Acquisition des données : utiliser du matos pro, préserver autant que possible
+Authentifier la donnée :
+-créer des hashes cryptographiques, du disque entier et des partions
+-comparer les hashes de la copie, ils doivent être identiques
+Fermer le contenant à clé, compléter formulaire de la chaîne de possession
+
+Traces pouvant être détruites lorsqu'on débranche l'alim d'un ordi :
+clés de registre, clés de chiffrement, param de conf, fichiers ouverts, processus, malware (si uniquement en mémoire, et n'a pas mis de persistence en place)
+
+Acquisition mémoire
+Brancher un périphérique pour collecter la mémoire va corrompre la preuve
+Oui, mais ne pas le faire c'est se priver de qques Go de données importantes
+On préserve au mieux l'intégrité de la mémoire
+Garder traces des actions pour exclure/expliquer les preuves liés aux actions réalisées durant l'acquisitions
+
+Problématiques avec les SSD :
+-Uniformisation d'usure (répartition sur toutes les cellules du SSD, données déplacées vers destination nettoyée toutes les 5 écritures, détruit fragmentation, topologie mémoire change constamment)
+-Trim (contrôleurs SSD nettoient espace mémoire non-utilisé, lancé par les OS : 1x/semaine sous Windows, récupérer donnée effacée presque impossible)
+-Performances : prefectch et readyboost peuvent être désactivés
+=> Conséquences : pas de preuve d'intégrité (le hash change en permanence, donc moins de preuve numérique)
+
+SSD : acquisition en direct ou machine éteinte?
+débrancher sauvagement : pourrait endommager le SSD et lancer l'auto-réparation
+éteindre proprement : pourrait lancer opération d'uniformisation d'usure et de trim
+=> pas de solution idéale : recommander de favoriser la collecte en direct machine allumée
+
+Stockage à long terme :
+-usure du SSD peut perdre des données rapidement (dès 7 jours)
+-durée de vie de la donnée sensible à la température
+
+Cas où le système est éteint, moyens pour récupérer ce qu'il y avait en RAM :
+Dump mémoire : exacte copié, générée lors d'un crash
+fichier hibernation : copie RAM quand veille prolongée
+fichier page : conçu comme les pages de la mémoire swap (partie de mémoire utilisée quand plus assez de RAM)
+
+4 couches du système de fichier :
+physique, système de fichier, données, métadonnées
+
+Quand données suppr : juste retirée du système de fichiers, elles deviennent non-allouées
+le système peut les écraser si besoin de place
+Données incomplètes récupérées = fragments de fichier, peuvent contenir des info cruciales
+
+Slack space = espace libre dans le cluster
+Secteur?
+Linux écrase tout l'espace libre avec octets null => pas de fragments de fichier
+
+3) Analyse de malware (statique, dynamique)
+
+Permet de comprendre fonctionnement et impacts, pour ensuite concevoir des contre-mesures
+
+Analyste statique = sans exécuter, comparaison de signaures de chaîne de caractères...
+L'exécutable malveillant doit être déchiffré ou décompressé pour procéder
+
+Analyse dynamique = en exécutant dans un environnement contrôlé (VM, émulateur, sandbox...)
+Plus efficace et ne requiert pas de rétro-conception du programme
+Mais pas toujours possible de constater le véritable comportement du malware (sous certaines conditions, peut détecter qu'il est en VM...)
+Et analyse dynamaique plus coûteuse en temps et ressources
+
+Outil pour analyse statique ou dynamique :
+Statique : Ghidra, IDA Pro (principalement), radare2
+Dynamique : cuckoo, frida, gdb, Ollydbg
+
+Logiciel malveillant avancé : utilise du chiffrement, de l'offuscation qui rend son analyse difficile en ajoutant des syntaxes complexes mais équivalentes
+Polymorphe/Métamorphe, changent, contrecarre la correspondance des signatures...
+Insertion de code morts, génération de grand nombre de décrypteurs
+
+Un Malware peut savoir qu'il est exécuter en VM :
+Tout sauf nom utilisateur, détection antivirus et serveur DNS (=> stockage dispo, MAC, nom répertoire, processus...)
+
+------------------------------------
+4 - Forensics Windows, Mac et Linux
+
+1)Windows
+
+NFTS
+Possible de récup fichier dans corbeille car windows se contente de modifier l'index lors de la suppression d'un fichier
+MFT : Master File table
+En NTFS : répertoire, fichier et metadonnées sont stockés dans la MFT sous forme de metadonnées
+
+Base de registre Windows : partagée en différentes sections logiques
+clés divisées en sous-clés, arborescence, les clés contiennent diverses informations
+
+Shadow Copy : utilitaire Windows pour réaliser des sauvegardes auto ou manuelles de fichiers ou disques, même s'ils sont en cours d'utilisation
+
+Pour récupérer mot de passe de session Windows :
+-dump mémoire du processus lsass.exe (dépend config et accès dump mémoire pas tjrs possible)
+-bruteforce hash de la base SAM (compliqué si bonne politique de mdp)
+-demande à l'utilisateur
+-retrouver en clair dans un fichier effacé (voire même en clair)
+
+Volatility : framework open-source d'inforensique de la MEMOIRE pour :
+-de la réponse à incident
+-de l'analyse malware
+rappel : inspecter fichier hiberfil.sys créer quand veille prolongée contenant état de la mémoire à ce moment
+
+Bitlocker : spécification de protection des données, dev par Microsoft, inclue dans certaines versions pro de Windows
+3 modes d'opérations (les 2 premiers nécessitent un composant matériel cryptographique (TPM) et BIOS compatible
+Mode transparent : l'utilisateur n'a pas à s'identifier lors de la phase de preboot (avant l'exec du BIOS)
+Mode d'authentification : requiert que l'utilisateur s'identifie, par exemple avec clé USB
+3e mode : clé USB : nécessite que l'accès à un périph USB soit possible avant chargement de l'OS (contrainte BIOS)
+Bitlocker nécessite que le disque contienne au moins 2 partitions formatées en NTFS
+Autres logiciels de chiffrement de disques (truecrypt, veracrypt, stormshield endpoint security, PGP, dm-crypt)
+
+Gestion des journaux ??
+
+Active Directory ??
+
+2)MacOS
+
+HFS (Hierarchical File System)
+
+3)Linux
+
+EXT4, XFS, BTRFS
+
+Pour obtenir la clé de déchiffrement d'un disque chiffré :
+-Depuis le dump mémoire (à condition de pouvoir l'avoir)
+-En le demandant à l'utilisateur
+-En le récupérant dans la puce CMOS ou autre endroit physique (cela dépend de la machine)
+
+Fichier .bash_history TRES utile pour comprendre ce qu'il s'est passé sur un système Linux (même si horodatage des commandes pas dispo)
+
+Logs très utiles, ex journaux web, permettent d'identifier attaque via serveur web
+Champs les + intéressants d'une ligne de logs d'un serveur apache sont :
+@IP src, horodatage, méthode de requête, URI de requête, code de réponse HTTP, user-agent
+
+Plusieurs façons de détecter l'exploitation d'une vulnérabilité dans ce cas :
+horodatage des requêtes POST sur cette URI, nombre anormal de requête sur cette URI, en lisant le fichier .bash_history, s'il existe, de l'utilisateur faisant tourner le service
+
+Egalement possible d'obtenir les infos :
+-@IP src de la requête d'exploitation dans les logs du serveur web
+-Ecoute du trafic réseau depuis cette machine ou analyse des sockets ouverts peut permettre d'identifier si flux C&C en cours vers l'attaquant
+-Analyse des logs du pare-feu du serveur peut permettre d'identifier la 1ère connexion vers l'attaquant
+-Liste des fichiers modifiés ces derniers jours et consultation de leurs contenus peut donner des indices sur le dérouleemnt de la post-exploitation
+
+----------------------------------------
+5 - Forensics réseau - Forensics terminaux mobiles
+
+1) Réseau
+
+Périphériques réseau : tout sauf antivirus
+pcap : packet capture, libpcap, sur win : winpcap
+
+Cyber/intrusion kill chain :
+Reconnaissance, weaponization, delivery, exploitation, installation, Command and Control, Actions on Objective
+
+IOC ? :
+@IP, hash MD5, mutex, nom de domaine, nom de fichier, URL
+
+Faux positifs avec produits qui effectuent des balayages réseau (scan interne détecté)
+Exemples de cas
+
+2) Terminaux mobiles
+Inforensique sur mobile devient importante, bcp d'info, mobile emmené partout, allumé tout le temps
+Outils en cours d'évolution sur ce sujet
+Problèmatique à analyser car bcp de modèles et OS différents, données modif en permanence et plusieurs éléments à prendre en compte (mémoire amovible, carte SIM)
+Tablette et GPS source d'info importante également, pas forcément d'outil prévu pour, investigateur doit tester l'outil avant son utilisation dans le cadre de l'investigation
+
+50-50 connexionx à internet mobile et pc, 75%Android sur os mobile
+
+Réseau cellulaire GSM
+
+Lorsque prise d'un smarphone lors d'une enquête : placer en cage de faraday car communique tout le temps et le réseau risque d'altérer les preuves
+Cependant, batteries smarphone ne tiennent pas longtemps => mais pas possible de passer câble à travers cage de faraday. Si déchargement, risque de mécanismes supplémentaires de verrouillage (pin, mdp)
+
+Carte SIM : contient des infos
+relatives au propriétaire, services et applications supplémentaires, stockage des données (contacts, sms, numéro tel, configuration), sécurité (infos relatives au propriétaires, authentification de la carte SIM, chiffrement des données)
+
+Outils permettant l'analyse inforensique d'un téléphone portable et de sa carte SIM (Bitpim, SIMcon...)
+
+Méthodes disponibles pour extraire des preuves inforensiques d'Android
+-Retirer la puce du smartphone :  /!\ en dernier recours, si aucune des autres méthodes ne fonctionne
+-JTAG
+-Logique en copiant les fichiers accessibles (de préférence une copie intégrale en depuis l'utilisateur root (à l'aide d'un exploit si nécessaire)
+-Physique en acquérant l'image du backup
+
+Sandboxing applicatif sur Android et iOS
+Applications séparées, sandboxées en userland
+Accès root baisse niveau de sécurité mais utile pour l'inforensique
+Données et opérations sensibles stockées et effectuées dans un secure world isolé du "normal world"
+
+iOS : plus compliqué, niveau de sécurité est monté, moins de gens font la sync avec pc et plutôt vers icloud
+
+Rechercher des infos par analyse statique (secrets codés en dur, cryptographie utilisée, hôtes distants, certificats...)
+
+Analyse dynamique : émulateur peut être utilisé mais smartphone rooté moins détectable par le programme malveillant
+Genymotion pratique pour émuler de nombreuses versions d'Android rapidement
+
+Analyse statique et dynamique automatisée :
+Plusieurs outils dispo : MOBSF, QUIXXI Security

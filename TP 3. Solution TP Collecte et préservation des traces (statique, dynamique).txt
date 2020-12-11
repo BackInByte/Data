@@ -1,0 +1,45 @@
+VI - Explain installed OS information in detail.
+
+HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion
+
+VII - What is the computer name?
+
+HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\ComputerName\ComputerName
+
+VIII - List all accounts in OS except the system accounts: Administrator, Guest, systemprofile, LocalService, NetworkService. (Account name, login count, last logon date...)
+
+HKLM\SAM\SAM\Domains\Account\Users
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList
+
+IX - Who was the last user to logon into PC? 
+
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI
+
+X - When was the last recorded shutdown date/time?
+
+HKLM\System\ControlSet\Control\Windows puis clic droit -> data interpreter
+
+XI - Explain the information of network interface(s) with an IP address assigned by DHCP. 
+
+I:\Windows\System32\config\SYSTEM: ControlSet001\services\Tcpip\Parameters\Interfaces\{E2B9AEEC-B1F7-4778-A049-50D7F2DAB2DE}
+
+XII - What applications were installed by the suspect after installing OS?
+
+I:\Windows\System32\config\SOFTWARE: Microsoft\Windows\CurrentVersion\Uninstall
+I:\Windows\System32\config\SOFTWARE/Wow6432\Microsoft\Windows\CurrentVersion\Uninstall
+I:\Users\informant\NTUSER.DAT: Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist\{CEBFF5CD-ACE2-4F4F-9178-9926F41749EA}\Count 
+Autres logiciels utiles pour �a : 
+LinkParser
+WinPrefetchView
+ShimcacheParser
+
+XIII -  List all traces about the system on/off and the user logon/logoff.
+
+https://ericzimmerman.github.io/#!index.md
+EvtxECmd.exe -f "I:\Windows\System32\winevt\Logs\Security.evtx" --csv informant_logs
+https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/
+Puis filtrer dans Excel sur les EventId 4624, 4647 et 4648 en cliquant sur Donn�es -> Convertir -> D�limit� -> Virgule -> Terminer
+
+XIV - dessiner une timeline (les �l�ments trouv�s hier et aujourd'hui pr�sent�s par ordre chronologique) � pr�senter au client
+
+Voir le fichier PDF
